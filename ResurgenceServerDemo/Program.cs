@@ -4,9 +4,19 @@ namespace ResurgenceServerDemo
 {
     class Program
     {
-        static void Main(string[] args)
+        /// <summary>
+        /// Port on which the WebSocket server runs.
+        /// </summary>
+        private const int Port = 3001;
+
+        private static void Main()
         {
-            Console.WriteLine("Hello World!");
+            Rover rover = new Rover();
+            Server server = new Server(Port, rover);
+            server.Start();
+            Console.WriteLine("Server started on port {0}.", Port);
+            // Keep the main thread alive so the server isn't killed.
+            while (server.IsListening) ;
         }
     }
 }
