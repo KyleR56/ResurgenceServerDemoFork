@@ -8,8 +8,8 @@ namespace ResurgenceServerDemo
     /// </summary>
     class Rover
     {
-        private Dictionary<string, Motor> _motors;
-        private Dictionary<string, Camera> _cameras;
+        private readonly IDictionary<string, Motor> _motors;
+        private readonly IDictionary<string, Camera> _cameras;
 
         /// <summary>
         /// Constructs a new virtual representation of the rover.
