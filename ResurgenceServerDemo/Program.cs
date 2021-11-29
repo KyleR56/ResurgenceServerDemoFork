@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace ResurgenceServerDemo
 {
@@ -15,8 +16,10 @@ namespace ResurgenceServerDemo
             Server server = new Server(Port, rover);
             server.Start();
             Console.WriteLine("Server started on port {0}.", Port);
-            // Keep the main thread alive so the server isn't killed.
-            while (server.IsListening) ;
+            Console.WriteLine("Press any key to stop the server.");
+            Console.ReadKey();
+            server.Stop();
+            Console.WriteLine("Server stopped.");
         }
     }
 }

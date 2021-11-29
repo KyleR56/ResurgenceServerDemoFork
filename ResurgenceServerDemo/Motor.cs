@@ -37,7 +37,7 @@ namespace ResurgenceServerDemo
                     throw new ArgumentOutOfRangeException(nameof(value), "|value| > 1");
                 }
                 _power = value;
-                JObject motorPowerRequest = new()
+                JObject motorPowerRequest = new JObject()
                 {
                     ["type"] = "motorPowerRequest",
                     ["motor"] = Name,

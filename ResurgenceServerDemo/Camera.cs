@@ -58,7 +58,7 @@ namespace ResurgenceServerDemo
                 // simulated camera stream.
                 if (_isStreaming)
                 {
-                    JObject cameraStreamOpenRequest = new()
+                    JObject cameraStreamOpenRequest = new JObject()
                     {
                         ["type"] = "cameraStreamOpenRequest",
                         ["camera"] = Name,
@@ -70,7 +70,7 @@ namespace ResurgenceServerDemo
                 }
                 else
                 {
-                    JObject cameraStreamCloseRequest = new()
+                    JObject cameraStreamCloseRequest = new JObject()
                     {
                         ["type"] = "cameraStreamCloseRequest",
                         ["camera"] = Name
@@ -90,7 +90,7 @@ namespace ResurgenceServerDemo
             set
             {
                 _streamData = value;
-                JObject cameraStreamReport = new()
+                JObject cameraStreamReport = new JObject()
                 {
                     ["type"] = "cameraStreamReport",
                     ["camera"] = Name,
