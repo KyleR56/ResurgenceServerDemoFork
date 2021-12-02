@@ -8,6 +8,9 @@ namespace ResurgenceServerDemo
     /// </summary>
     class Camera
     {
+        private double _streamFps;
+        private int _streamWidth;
+        private int _streamHeight;
         private bool _isStreaming;
         private byte[] _streamData;
 
@@ -18,9 +21,9 @@ namespace ResurgenceServerDemo
         public Camera(string name)
         {
             Name = name;
-            StreamFps = 0;
-            StreamWidth = 0;
-            StreamHeight = 0;
+            _streamFps = 0;
+            _streamWidth = 0;
+            _streamHeight = 0;
             _isStreaming = false;
             _streamData = null;
         }
@@ -33,17 +36,53 @@ namespace ResurgenceServerDemo
         /// <summary>
         /// The frames per second of this camera's stream.
         /// </summary>
-        public double StreamFps { get; set; }
+        public double StreamFps
+        {
+            get { return _streamFps; }
+            set
+            {
+                _streamFps = value;
+                if (_isStreaming)
+                {
+                    // Inform the simulator about the new fps.
+                    SendStreamOpenRequest();
+                }
+            }
+        }
 
         /// <summary>
-        /// The width of this camera's stream.
+        /// The width of this camera's stream in pixels.
         /// </summary>
-        public double StreamWidth { get; set; }
+        public int StreamWidth
+        {
+            get { return _streamWidth; }
+            set
+            {
+                _streamWidth = value;
+                if (_isStreaming)
+                {
+                    // Inform the simulator about the new width.
+                    SendStreamOpenRequest();
+                }
+            }
+        }
 
         /// <summary>
-        /// The height of this camera's stream.
+        /// The height of this camera's stream in pixels.
         /// </summary>
-        public double StreamHeight { get; set; }
+        public int StreamHeight
+        {
+            get { return _streamHeight; }
+            set
+            {
+                _streamHeight = value;
+                if (_isStreaming)
+                {
+                    // Inform the simulator about the new height.
+                    SendStreamOpenRequest();
+                }
+            }
+        }
 
         /// <summary>
         /// Whether this camera is streaming data to Mission Control.
@@ -58,15 +97,7 @@ namespace ResurgenceServerDemo
                 // simulated camera stream.
                 if (_isStreaming)
                 {
-                    JObject cameraStreamOpenRequest = new JObject()
-                    {
-                        ["type"] = "cameraStreamOpenRequest",
-                        ["camera"] = Name,
-                        ["fps"] = StreamFps,
-                        ["width"] = StreamWidth,
-                        ["Height"] = StreamHeight
-                    };
-                    Server.Instance.MessageSimulator(cameraStreamOpenRequest);
+                    SendStreamOpenRequest();
                 }
                 else
                 {
@@ -98,6 +129,23 @@ namespace ResurgenceServerDemo
                 };
                 Server.Instance.MessageMissionControl(cameraStreamReport);
             }
+        }
+
+        /// <summary>
+        /// Instructs the simulator to begin providing a camera stream, or to
+        /// update the parameters of an existing camera stream.
+        /// </summary>
+        private void SendStreamOpenRequest()
+        {
+            JObject cameraStreamOpenRequest = new JObject()
+            {
+                ["type"] = "cameraStreamOpenRequest",
+                ["camera"] = Name,
+                ["fps"] = StreamFps,
+                ["width"] = StreamWidth,
+                ["Height"] = StreamHeight
+            };
+            Server.Instance.MessageSimulator(cameraStreamOpenRequest);
         }
     }
 }
