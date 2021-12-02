@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 
 namespace ResurgenceServerDemo
 {
@@ -8,6 +9,7 @@ namespace ResurgenceServerDemo
     /// </summary>
     class Rover
     {
+        private bool _emergencyStopped;
         private readonly IDictionary<string, Motor> _motors;
         private readonly IDictionary<string, Camera> _cameras;
 
@@ -16,6 +18,8 @@ namespace ResurgenceServerDemo
         /// </summary>
         public Rover()
         {
+            _emergencyStopped = false;
+
             string[] motorNames = {
                 "driveFrontLeft",
                 "driveFrontRight",
@@ -36,6 +40,22 @@ namespace ResurgenceServerDemo
             foreach (string cameraName in cameraNames)
             {
                 _cameras[cameraName] = new Camera(cameraName);
+            }
+        }
+
+        public bool EmergencyStopped
+        {
+            get { return _emergencyStopped; }
+            set
+            {
+                _emergencyStopped = value;
+                if (_emergencyStopped)
+                {
+                    foreach (Motor motor in _motors.Values)
+                    {
+                        motor.Power = 0;
+                    }
+                }
             }
         }
 

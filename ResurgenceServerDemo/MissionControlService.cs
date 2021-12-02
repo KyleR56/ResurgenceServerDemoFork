@@ -39,6 +39,9 @@ namespace ResurgenceServerDemo
             string type = (string)message["type"];
             switch (type)
             {
+                case "emergencyStopRequest":
+                    RoverUtility.HandleEmergencyStopRequest(_rover, message);
+                    break;
                 case "driveRequest":
                     RoverUtility.HandleDriveRequest(_rover, message);
                     break;

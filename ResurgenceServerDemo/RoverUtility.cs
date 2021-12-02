@@ -9,10 +9,24 @@ namespace ResurgenceServerDemo
     static class RoverUtility
     {
         /// <summary>
+        /// Handles an emergency stop request sent from Mission Control to the rover.
+        /// </summary>
+        public static void HandleEmergencyStopRequest(Rover rover, JObject emergencyStopRequest)
+        {
+            bool stop = (bool)emergencyStopRequest["stop"];
+            rover.EmergencyStopped = stop;
+        }
+
+        /// <summary>
         /// Handles a drive request sent from Mission Control to the rover.
         /// </summary>
         public static void HandleDriveRequest(Rover rover, JObject driveRequest)
         {
+            if (rover.EmergencyStopped)
+            {
+                return;
+            }
+
             double straight = (double)driveRequest["straight"];
             double steer = (double)driveRequest["steer"];
 
@@ -39,6 +53,11 @@ namespace ResurgenceServerDemo
         /// </summary>
         public static void HandleMotorPowerRequest(Rover rover, JObject motorPowerRequest)
         {
+            if (rover.EmergencyStopped)
+            {
+                return;
+            }
+
             string motorName = (string)motorPowerRequest["motor"];
             double power = (double)motorPowerRequest["power"];
             rover.GetMotor(motorName).Power = power;
