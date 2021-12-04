@@ -126,22 +126,6 @@ namespace ResurgenceServerDemo.Network
         }
 
         /// <summary>
-        /// Informs the simulator of all camera streams requested by Mission
-        /// Control. This should be invoked when the simulator first connects
-        /// to the rover server.
-        /// </summary>
-        public static void ResendAllCameraStreamOpenRequests(Rover rover)
-        {
-            foreach (Camera camera in rover.GetCameras())
-            {
-                if (camera.IsStreaming)
-                {
-                    SendCameraStreamOpenRequest(camera);
-                }
-            }
-        }
-
-        /// <summary>
         /// Sends a frame of a camera stream to Mission Control.
         /// </summary>
         public static void SendCameraStreamReport(Camera camera)
@@ -150,7 +134,7 @@ namespace ResurgenceServerDemo.Network
             {
                 ["type"] = "cameraStreamReport",
                 ["camera"] = camera.Name,
-                ["data"] = Convert.ToBase64String(camera.StreamData)
+                ["data"] = camera.StreamData == null ? null : Convert.ToBase64String(camera.StreamData)
             };
             Server.Instance.MessageMissionControl(cameraStreamReport);
         }

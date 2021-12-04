@@ -22,7 +22,18 @@ namespace ResurgenceServerDemo.Network
         protected override void OnOpen()
         {
             Console.WriteLine("Simulator connected.");
-            MessageUtility.ResendAllCameraStreamOpenRequests(_rover);
+
+            // Inform the simulator of the rover's current state.
+
+            foreach (Camera camera in _rover.GetCameras())
+            {
+                MessageUtility.SendCameraStreamOpenRequest(camera);
+            }
+
+            foreach (Motor motor in _rover.GetMotors())
+            {
+                MessageUtility.SendMotorPowerRequest(motor);
+            }
         }
 
         protected override void OnMessage(MessageEventArgs e)
@@ -34,6 +45,11 @@ namespace ResurgenceServerDemo.Network
         protected override void OnClose(CloseEventArgs e)
         {
             Console.WriteLine("Simulator disconnected.");
+
+            foreach (Camera camera in _rover.GetCameras())
+            {
+                camera.StreamData = null;
+            }
         }
 
         private void HandleMessage(JObject message)
