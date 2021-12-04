@@ -1,9 +1,10 @@
 ﻿using System;
-using System.Threading;
+using ResurgenceServerDemo.Hardware;
+using ResurgenceServerDemo.Network;
 
 namespace ResurgenceServerDemo
 {
-    class Program
+    public class Program
     {
         /// <summary>
         /// Port on which the WebSocket server runs.

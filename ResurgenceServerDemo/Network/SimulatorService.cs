@@ -2,14 +2,15 @@
 using WebSocketSharp;
 using WebSocketSharp.Server;
 using Newtonsoft.Json.Linq;
+using ResurgenceServerDemo.Hardware;
 
-namespace ResurgenceServerDemo
+namespace ResurgenceServerDemo.Network
 {
     /// <summary>
     /// Provides behavior for handling the connection to the Simulator
     /// WebSocket client.
     /// </summary>
-    class SimulatorService : WebSocketBehavior
+    public class SimulatorService : WebSocketBehavior
     {
         private Rover _rover;
 
@@ -21,6 +22,7 @@ namespace ResurgenceServerDemo
         protected override void OnOpen()
         {
             Console.WriteLine("Simulator connected.");
+            MessageUtility.ResendAllCameraStreamOpenRequests(_rover);
         }
 
         protected override void OnMessage(MessageEventArgs e)
@@ -40,7 +42,7 @@ namespace ResurgenceServerDemo
             switch (type)
             {
                 case "cameraStreamReport":
-                    RoverUtility.HandleCameraStreamReport(_rover, message);
+                    MessageUtility.HandleCameraStreamReport(_rover, message);
                     break;
             }
         }

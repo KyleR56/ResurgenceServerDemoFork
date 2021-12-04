@@ -2,14 +2,15 @@
 using WebSocketSharp;
 using WebSocketSharp.Server;
 using Newtonsoft.Json.Linq;
+using ResurgenceServerDemo.Hardware;
 
-namespace ResurgenceServerDemo
+namespace ResurgenceServerDemo.Network
 {
     /// <summary>
     /// Provides behavior for handling the connection to the Mission Control
     /// WebSocket client.
     /// </summary>
-    class MissionControlService : WebSocketBehavior
+    public class MissionControlService : WebSocketBehavior
     {
         private Rover _rover;
 
@@ -40,19 +41,19 @@ namespace ResurgenceServerDemo
             switch (type)
             {
                 case "emergencyStopRequest":
-                    RoverUtility.HandleEmergencyStopRequest(_rover, message);
+                    MessageUtility.HandleEmergencyStopRequest(_rover, message);
                     break;
                 case "driveRequest":
-                    RoverUtility.HandleDriveRequest(_rover, message);
+                    MessageUtility.HandleDriveRequest(_rover, message);
                     break;
                 case "motorPowerRequest":
-                    RoverUtility.HandleMotorPowerRequest(_rover, message);
+                    MessageUtility.HandleMotorPowerRequest(_rover, message);
                     break;
                 case "cameraStreamOpenRequest":
-                    RoverUtility.HandleCameraStreamOpenRequest(_rover, message);
+                    MessageUtility.HandleCameraStreamOpenRequest(_rover, message);
                     break;
                 case "cameraStreamCloseRequest":
-                    RoverUtility.HandleCameraStreamCloseRequest(_rover, message);
+                    MessageUtility.HandleCameraStreamCloseRequest(_rover, message);
                     break;
             }
         }

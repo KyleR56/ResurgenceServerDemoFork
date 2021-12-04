@@ -1,12 +1,12 @@
 ﻿using System;
-using Newtonsoft.Json.Linq;
+using ResurgenceServerDemo.Network;
 
-namespace ResurgenceServerDemo
+namespace ResurgenceServerDemo.Hardware
 {
     /// <summary>
     /// A virtual representation of a motor on the rover.
     /// </summary>
-    class Motor
+    public class Motor
     {
         private double _power;
 
@@ -37,13 +37,7 @@ namespace ResurgenceServerDemo
                     throw new ArgumentOutOfRangeException(nameof(value), "|value| > 1");
                 }
                 _power = value;
-                JObject motorPowerRequest = new JObject()
-                {
-                    ["type"] = "motorPowerRequest",
-                    ["motor"] = Name,
-                    ["power"] = _power
-                };
-                Server.Instance.MessageSimulator(motorPowerRequest);
+                MessageUtility.SendMotorPowerRequest(this);
             }
         }
     }

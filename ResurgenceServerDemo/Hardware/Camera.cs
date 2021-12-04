@@ -1,12 +1,11 @@
-﻿using System;
-using Newtonsoft.Json.Linq;
+﻿using ResurgenceServerDemo.Network;
 
-namespace ResurgenceServerDemo
+namespace ResurgenceServerDemo.Hardware
 {
     /// <summary>
     /// A virtual representation of a camera on the rover.
     /// </summary>
-    class Camera
+    public class Camera
     {
         private double _streamFps;
         private int _streamWidth;
@@ -45,7 +44,7 @@ namespace ResurgenceServerDemo
                 if (_isStreaming)
                 {
                     // Inform the simulator about the new fps.
-                    SendStreamOpenRequest();
+                    MessageUtility.SendCameraStreamOpenRequest(this);
                 }
             }
         }
@@ -62,7 +61,7 @@ namespace ResurgenceServerDemo
                 if (_isStreaming)
                 {
                     // Inform the simulator about the new width.
-                    SendStreamOpenRequest();
+                    MessageUtility.SendCameraStreamOpenRequest(this);
                 }
             }
         }
@@ -79,7 +78,7 @@ namespace ResurgenceServerDemo
                 if (_isStreaming)
                 {
                     // Inform the simulator about the new height.
-                    SendStreamOpenRequest();
+                    MessageUtility.SendCameraStreamOpenRequest(this);
                 }
             }
         }
@@ -97,16 +96,11 @@ namespace ResurgenceServerDemo
                 // simulated camera stream.
                 if (_isStreaming)
                 {
-                    SendStreamOpenRequest();
+                    MessageUtility.SendCameraStreamOpenRequest(this);
                 }
                 else
                 {
-                    JObject cameraStreamCloseRequest = new JObject()
-                    {
-                        ["type"] = "cameraStreamCloseRequest",
-                        ["camera"] = Name
-                    };
-                    Server.Instance.MessageSimulator(cameraStreamCloseRequest);
+                    MessageUtility.SendCameraStreamCloseRequest(this);
                 }
             }
         }
@@ -121,31 +115,8 @@ namespace ResurgenceServerDemo
             set
             {
                 _streamData = value;
-                JObject cameraStreamReport = new JObject()
-                {
-                    ["type"] = "cameraStreamReport",
-                    ["camera"] = Name,
-                    ["data"] = Convert.ToBase64String(_streamData)
-                };
-                Server.Instance.MessageMissionControl(cameraStreamReport);
+                MessageUtility.SendCameraStreamReport(this);
             }
-        }
-
-        /// <summary>
-        /// Instructs the simulator to begin providing a camera stream, or to
-        /// update the parameters of an existing camera stream.
-        /// </summary>
-        private void SendStreamOpenRequest()
-        {
-            JObject cameraStreamOpenRequest = new JObject()
-            {
-                ["type"] = "cameraStreamOpenRequest",
-                ["camera"] = Name,
-                ["fps"] = StreamFps,
-                ["width"] = StreamWidth,
-                ["Height"] = StreamHeight
-            };
-            Server.Instance.MessageSimulator(cameraStreamOpenRequest);
         }
     }
 }

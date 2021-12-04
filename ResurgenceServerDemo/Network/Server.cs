@@ -1,13 +1,14 @@
 ﻿using WebSocketSharp.Server;
 using Newtonsoft.Json.Linq;
+using ResurgenceServerDemo.Hardware;
 
-namespace ResurgenceServerDemo
+namespace ResurgenceServerDemo.Network
 {
     /// <summary>
     /// Provides a WebSocket server that connects Mission Control with the
     /// simulator.
     /// </summary>
-    class Server
+    public class Server
     {
         private static Server s_instance;
 

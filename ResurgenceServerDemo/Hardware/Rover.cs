@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
 
-namespace ResurgenceServerDemo
+namespace ResurgenceServerDemo.Hardware
 {
     /// <summary>
     /// Virtual representation of the rover and its hardware components.
     /// </summary>
-    class Rover
+    public class Rover
     {
         private bool _emergencyStopped;
         private readonly IDictionary<string, Motor> _motors;
@@ -72,6 +71,14 @@ namespace ResurgenceServerDemo
         }
 
         /// <summary>
+        /// Returns a collection containing all of the motors on this rover.
+        /// </summary>
+        public ICollection<Motor> GetMotors()
+        {
+            return _motors.Values;
+        }
+
+        /// <summary>
         /// Returns the camera on this rover with the given name.
         /// </summary>
         public Camera GetCamera(string cameraName)
@@ -81,6 +88,14 @@ namespace ResurgenceServerDemo
                 return camera;
             }
             throw new ArgumentException("No such camera: " + cameraName);
+        }
+
+        /// <summary>
+        /// Returns a collection containing all of the cameras on this rover.
+        /// </summary>
+        public ICollection<Camera> GetCameras()
+        {
+            return _cameras.Values;
         }
     }
 }
