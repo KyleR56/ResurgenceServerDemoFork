@@ -35,7 +35,7 @@ namespace ResurgenceServerDemo.Network
             Console.WriteLine("Mission Control disconnected.");
 
             // Stop all camera streams.
-            foreach (Camera camera in _rover.GetCameras())
+            foreach (Camera camera in _rover.Cameras)
             {
                 camera.IsStreaming = false;
             }

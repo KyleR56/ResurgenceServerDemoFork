@@ -42,6 +42,9 @@ namespace ResurgenceServerDemo.Hardware
             }
         }
 
+        /// <summary>
+        /// Whether the emergency stop is engaged.
+        /// </summary>
         public bool EmergencyStopped
         {
             get { return _emergencyStopped; }
@@ -59,6 +62,22 @@ namespace ResurgenceServerDemo.Hardware
         }
 
         /// <summary>
+        /// A collection containing all of the motors on this rover.
+        /// </summary>
+        public ICollection<Motor> Motors
+        {
+            get { return _motors.Values; }
+        }
+
+        /// <summary>
+        /// A collection containing all of the cameras on this rover.
+        /// </summary>
+        public ICollection<Camera> Cameras
+        {
+            get { return _cameras.Values; }
+        }
+
+        /// <summary>
         /// Returns the motor on this rover with the given name.
         /// </summary>
         public Motor GetMotor(string motorName)
@@ -71,14 +90,6 @@ namespace ResurgenceServerDemo.Hardware
         }
 
         /// <summary>
-        /// Returns a collection containing all of the motors on this rover.
-        /// </summary>
-        public ICollection<Motor> GetMotors()
-        {
-            return _motors.Values;
-        }
-
-        /// <summary>
         /// Returns the camera on this rover with the given name.
         /// </summary>
         public Camera GetCamera(string cameraName)
@@ -88,14 +99,6 @@ namespace ResurgenceServerDemo.Hardware
                 return camera;
             }
             throw new ArgumentException("No such camera: " + cameraName);
-        }
-
-        /// <summary>
-        /// Returns a collection containing all of the cameras on this rover.
-        /// </summary>
-        public ICollection<Camera> GetCameras()
-        {
-            return _cameras.Values;
         }
     }
 }

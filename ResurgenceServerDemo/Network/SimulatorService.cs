@@ -25,12 +25,12 @@ namespace ResurgenceServerDemo.Network
 
             // Inform the simulator of the rover's current state.
 
-            foreach (Camera camera in _rover.GetCameras())
+            foreach (Camera camera in _rover.Cameras)
             {
                 MessageUtility.SendCameraStreamOpenRequest(camera);
             }
 
-            foreach (Motor motor in _rover.GetMotors())
+            foreach (Motor motor in _rover.Motors)
             {
                 MessageUtility.SendMotorPowerRequest(motor);
             }
@@ -46,7 +46,7 @@ namespace ResurgenceServerDemo.Network
         {
             Console.WriteLine("Simulator disconnected.");
 
-            foreach (Camera camera in _rover.GetCameras())
+            foreach (Camera camera in _rover.Cameras)
             {
                 camera.StreamData = null;
             }
