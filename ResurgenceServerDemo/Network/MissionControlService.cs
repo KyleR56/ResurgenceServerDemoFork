@@ -33,6 +33,12 @@ namespace ResurgenceServerDemo.Network
         protected override void OnClose(CloseEventArgs e)
         {
             Console.WriteLine("Mission Control disconnected.");
+
+            // Stop all camera streams.
+            foreach (Camera camera in _rover.GetCameras())
+            {
+                camera.IsStreaming = false;
+            }
         }
 
         private void HandleMessage(JObject message)
