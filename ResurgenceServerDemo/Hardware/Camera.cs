@@ -44,7 +44,7 @@ namespace ResurgenceServerDemo.Hardware
                 if (_isStreaming)
                 {
                     // Inform the simulator about the new fps.
-                    MessageUtility.SendCameraStreamOpenRequest(this);
+                    MessageUtility.SendSimCameraStreamOpenRequest(this);
                 }
             }
         }
@@ -61,7 +61,7 @@ namespace ResurgenceServerDemo.Hardware
                 if (_isStreaming)
                 {
                     // Inform the simulator about the new width.
-                    MessageUtility.SendCameraStreamOpenRequest(this);
+                    MessageUtility.SendSimCameraStreamOpenRequest(this);
                 }
             }
         }
@@ -78,7 +78,7 @@ namespace ResurgenceServerDemo.Hardware
                 if (_isStreaming)
                 {
                     // Inform the simulator about the new height.
-                    MessageUtility.SendCameraStreamOpenRequest(this);
+                    MessageUtility.SendSimCameraStreamOpenRequest(this);
                 }
             }
         }
@@ -96,11 +96,11 @@ namespace ResurgenceServerDemo.Hardware
                 // simulated camera stream.
                 if (_isStreaming)
                 {
-                    MessageUtility.SendCameraStreamOpenRequest(this);
+                    MessageUtility.SendSimCameraStreamOpenRequest(this);
                 }
                 else
                 {
-                    MessageUtility.SendCameraStreamCloseRequest(this);
+                    MessageUtility.SendSimCameraStreamCloseRequest(this);
                 }
             }
         }

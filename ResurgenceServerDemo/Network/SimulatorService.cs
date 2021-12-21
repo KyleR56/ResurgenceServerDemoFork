@@ -29,13 +29,13 @@ namespace ResurgenceServerDemo.Network
             {
                 if (camera.IsStreaming)
                 {
-                    MessageUtility.SendCameraStreamOpenRequest(camera);
+                    MessageUtility.SendSimCameraStreamOpenRequest(camera);
                 }
             }
 
             foreach (Motor motor in _rover.Motors)
             {
-                MessageUtility.SendMotorPowerRequest(motor);
+                MessageUtility.SendSimMotorPowerRequest(motor);
             }
         }
 
@@ -60,8 +60,8 @@ namespace ResurgenceServerDemo.Network
             string type = (string)message["type"];
             switch (type)
             {
-                case "cameraStreamReport":
-                    MessageUtility.HandleCameraStreamReport(_rover, message);
+                case "simCameraStreamReport":
+                    MessageUtility.HandleSimCameraStreamReport(_rover, message);
                     break;
             }
         }

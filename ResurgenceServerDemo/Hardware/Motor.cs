@@ -37,7 +37,7 @@ namespace ResurgenceServerDemo.Hardware
                     throw new ArgumentOutOfRangeException(nameof(value), "|value| > 1");
                 }
                 _power = value;
-                MessageUtility.SendMotorPowerRequest(this);
+                MessageUtility.SendSimMotorPowerRequest(this);
             }
         }
     }

@@ -74,7 +74,7 @@ namespace ResurgenceServerDemo.Network
         /// <summary>
         /// Handles a camera stream report sent from the simulator to the rover.
         /// </summary>
-        public static void HandleCameraStreamReport(Rover rover, JObject cameraStreamReport)
+        public static void HandleSimCameraStreamReport(Rover rover, JObject cameraStreamReport)
         {
             string cameraName = (string)cameraStreamReport["camera"];
             byte[] data = Convert.FromBase64String((string)cameraStreamReport["data"]);
@@ -84,11 +84,11 @@ namespace ResurgenceServerDemo.Network
         /// <summary>
         /// Instructs the simulator to set a simulated motor's power.
         /// </summary>
-        public static void SendMotorPowerRequest(Motor motor)
+        public static void SendSimMotorPowerRequest(Motor motor)
         {
             JObject motorPowerRequest = new JObject()
             {
-                ["type"] = "motorPowerRequest",
+                ["type"] = "simMotorPowerRequest",
                 ["motor"] = motor.Name,
                 ["power"] = motor.Power
             };
@@ -99,11 +99,11 @@ namespace ResurgenceServerDemo.Network
         /// Instructs the simulator to begin providing a camera stream, or to
         /// update the parameters of an existing camera stream.
         /// </summary>
-        public static void SendCameraStreamOpenRequest(Camera camera)
+        public static void SendSimCameraStreamOpenRequest(Camera camera)
         {
             JObject cameraStreamOpenRequest = new JObject()
             {
-                ["type"] = "cameraStreamOpenRequest",
+                ["type"] = "simCameraStreamOpenRequest",
                 ["camera"] = camera.Name,
                 ["fps"] = camera.StreamFps,
                 ["width"] = camera.StreamWidth,
@@ -115,11 +115,11 @@ namespace ResurgenceServerDemo.Network
         /// <summary>
         /// Instruct the simulator to stop streaming a simulated camera.
         /// </summary>
-        public static void SendCameraStreamCloseRequest(Camera camera)
+        public static void SendSimCameraStreamCloseRequest(Camera camera)
         {
             JObject cameraStreamCloseRequest = new JObject()
             {
-                ["type"] = "cameraStreamCloseRequest",
+                ["type"] = "simCameraStreamCloseRequest",
                 ["camera"] = camera.Name
             };
             Server.Instance.MessageSimulator(cameraStreamCloseRequest);
