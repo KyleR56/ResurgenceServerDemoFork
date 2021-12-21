@@ -27,7 +27,10 @@ namespace ResurgenceServerDemo.Network
 
             foreach (Camera camera in _rover.Cameras)
             {
-                MessageUtility.SendCameraStreamOpenRequest(camera);
+                if (camera.IsStreaming)
+                {
+                    MessageUtility.SendCameraStreamOpenRequest(camera);
+                }
             }
 
             foreach (Motor motor in _rover.Motors)
