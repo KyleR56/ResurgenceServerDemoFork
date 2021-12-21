@@ -25,10 +25,10 @@ namespace ResurgenceServerDemo.Hardware
             double leftPower = straight + steer;
             double rightPower = straight - steer;
 
-            rover.GetMotor("driveFrontLeft").Power = leftPower;
-            rover.GetMotor("driveFrontRight").Power = rightPower;
-            rover.GetMotor("driveRearLeft").Power = leftPower;
-            rover.GetMotor("driveRearRight").Power = rightPower;
+            rover.GetMotor("frontLeftWheel").Power = leftPower;
+            rover.GetMotor("frontRightWheel").Power = rightPower;
+            rover.GetMotor("rearLeftWheel").Power = leftPower;
+            rover.GetMotor("rearRightWheel").Power = rightPower;
         }
     }
 }

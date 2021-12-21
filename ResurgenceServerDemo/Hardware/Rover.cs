@@ -20,10 +20,10 @@ namespace ResurgenceServerDemo.Hardware
             _emergencyStopped = false;
 
             string[] motorNames = {
-                "driveFrontLeft",
-                "driveFrontRight",
-                "driveRearLeft",
-                "driveRearRight",
+                "frontLeftWheel",
+                "frontRightWheel",
+                "rearLeftWheel",
+                "rearRightWheel",
                 "armBase",
                 "shoulder",
                 "elbow"
