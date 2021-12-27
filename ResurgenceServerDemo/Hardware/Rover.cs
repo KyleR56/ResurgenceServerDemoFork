@@ -31,7 +31,7 @@ namespace ResurgenceServerDemo.Hardware
             _motors = new Dictionary<string, Motor>();
             foreach (string motorName in motorNames)
             {
-                _motors[motorName] = new Motor(motorName);
+                _motors[motorName] = new Motor(motorName, true);
             }
 
             string[] cameraNames = { "front" };
@@ -55,7 +55,8 @@ namespace ResurgenceServerDemo.Hardware
                 {
                     foreach (Motor motor in _motors.Values)
                     {
-                        motor.Power = 0;
+                        motor.TargetPower = 0;
+                        motor.Mode = Motor.RunMode.RunWithPower;
                     }
                 }
             }

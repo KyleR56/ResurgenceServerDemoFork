@@ -55,11 +55,20 @@ namespace ResurgenceServerDemo.Network
                 case "motorPowerRequest":
                     MessageUtility.HandleMotorPowerRequest(_rover, message);
                     break;
+                case "motorPositionRequest":
+                    MessageUtility.HandleMotorPositionRequest(_rover, message);
+                    break;
+                case "motorVelocityRequest":
+                    MessageUtility.HandleMotorVelocityRequest(_rover, message);
+                    break;
                 case "cameraStreamOpenRequest":
                     MessageUtility.HandleCameraStreamOpenRequest(_rover, message);
                     break;
                 case "cameraStreamCloseRequest":
                     MessageUtility.HandleCameraStreamCloseRequest(_rover, message);
+                    break;
+                default:
+                    Console.Error.WriteLine("Unknown message type: " + type);
                     break;
             }
         }

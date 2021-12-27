@@ -60,8 +60,14 @@ namespace ResurgenceServerDemo.Network
             string type = (string)message["type"];
             switch (type)
             {
+                case "simMotorStatusReport":
+                    MessageUtility.HandleSimMotorStatusReport(_rover, message);
+                    break;
                 case "simCameraStreamReport":
                     MessageUtility.HandleSimCameraStreamReport(_rover, message);
+                    break;
+                default:
+                    Console.Error.WriteLine("Unknown message type: " + type);
                     break;
             }
         }

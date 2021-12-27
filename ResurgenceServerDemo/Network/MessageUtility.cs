@@ -34,7 +34,8 @@ namespace ResurgenceServerDemo.Network
         }
 
         /// <summary>
-        /// Handles a motor power request sent from Mission Control to the rover.
+        /// Handles a motor power request sent from Mission Control to the 
+        /// rover.
         /// </summary>
         public static void HandleMotorPowerRequest(Rover rover, JObject motorPowerRequest)
         {
@@ -42,14 +43,50 @@ namespace ResurgenceServerDemo.Network
             {
                 return;
             }
-
             string motorName = (string)motorPowerRequest["motor"];
             double power = (double)motorPowerRequest["power"];
-            rover.GetMotor(motorName).Power = power;
+            Motor motor = rover.GetMotor(motorName);
+            motor.TargetPower = power;
+            motor.Mode = Motor.RunMode.RunWithPower;
         }
 
         /// <summary>
-        /// Handles a camera stream open request sent from Mission Control to the rover.
+        /// Handles a motor velocity request sent from Mission Control to the 
+        /// rover.
+        /// </summary>
+        public static void HandleMotorPositionRequest(Rover rover, JObject motorPositionRequest)
+        {
+            if (rover.EmergencyStopped)
+            {
+                return;
+            }
+            string motorName = (string)motorPositionRequest["motor"];
+            double position = (double)motorPositionRequest["position"];
+            Motor motor = rover.GetMotor(motorName);
+            motor.TargetPosition = position;
+            motor.Mode = Motor.RunMode.RunToPosition;
+        }
+
+        /// <summary>
+        /// Handles a motor position request sent from Mission Control to the
+        /// rover.
+        /// </summary>
+        public static void HandleMotorVelocityRequest(Rover rover, JObject motorVelocityRequest)
+        {
+            if (rover.EmergencyStopped)
+            {
+                return;
+            }
+            string motorName = (string)motorVelocityRequest["motor"];
+            double position = (double)motorVelocityRequest["position"];
+            Motor motor = rover.GetMotor(motorName);
+            motor.TargetVelocity = position;
+            motor.Mode = Motor.RunMode.RunWithVelocity;
+        }
+
+        /// <summary>
+        /// Handles a camera stream open request sent from Mission Control to
+        /// the rover.
         /// </summary>
         public static void HandleCameraStreamOpenRequest(Rover rover, JObject cameraStreamOpenRequest)
         {
@@ -62,7 +99,8 @@ namespace ResurgenceServerDemo.Network
         }
 
         /// <summary>
-        /// Handles a camera stream close request sent from Mission Control to the rover.
+        /// Handles a camera stream close request sent from Mission Control to
+        /// the rover.
         /// </summary>
         public static void HandleCameraStreamCloseRequest(Rover rover, JObject cameraStreamOpenRequest)
         {
@@ -72,7 +110,28 @@ namespace ResurgenceServerDemo.Network
         }
 
         /// <summary>
-        /// Handles a camera stream report sent from the simulator to the rover.
+        /// Handles a motor status report sent from the simulator to the rover.
+        /// </summary>
+        public static void HandleSimMotorStatusReport(Rover rover, JObject motorStatusReport)
+        {
+            string motorName = (string)motorStatusReport["motor"];
+            Motor motor = rover.GetMotor(motorName);
+
+            double? currentPower = (double?)motorStatusReport["power"];
+            double? currentPosition = (double?)motorStatusReport["position"];
+            double? currentVelocity = (double?)motorStatusReport["velocity"];
+
+            if (currentPower.HasValue)
+                motor.CurrentPower = (double)currentPower;
+            if (currentPosition.HasValue)
+                motor.CurrentPosition = (double)currentPosition;
+            if (currentVelocity.HasValue)
+                motor.CurrentVelocity = (double)currentVelocity;
+        }
+
+        /// <summary>
+        /// Handles a camera stream report sent from the simulator to the
+        /// rover.
         /// </summary>
         public static void HandleSimCameraStreamReport(Rover rover, JObject cameraStreamReport)
         {
@@ -90,9 +149,37 @@ namespace ResurgenceServerDemo.Network
             {
                 ["type"] = "simMotorPowerRequest",
                 ["motor"] = motor.Name,
-                ["power"] = motor.Power
+                ["power"] = motor.TargetPower
             };
             Server.Instance.MessageSimulator(motorPowerRequest);
+        }
+
+        /// <summary>
+        /// Instructs the simulator to set a simulated motor's target position.
+        /// </summary>
+        public static void SendSimMotorPositionRequest(Motor motor)
+        {
+            JObject motorPositionRequest = new JObject()
+            {
+                ["type"] = "simMotorPositionRequest",
+                ["motor"] = motor.Name,
+                ["position"] = motor.TargetPosition
+            };
+            Server.Instance.MessageSimulator(motorPositionRequest);
+        }
+
+        /// <summary>
+        /// Instructs the simulator to set a simulated motor's target velocity.
+        /// </summary>
+        public static void SendSimMotorVelocityRequest(Motor motor)
+        {
+            JObject motorVelocityRequest = new JObject()
+            {
+                ["type"] = "simMotorVelocityRequest",
+                ["motor"] = motor.Name,
+                ["velocity"] = motor.TargetVelocity
+            };
+            Server.Instance.MessageSimulator(motorVelocityRequest);
         }
 
         /// <summary>
@@ -123,6 +210,30 @@ namespace ResurgenceServerDemo.Network
                 ["camera"] = camera.Name
             };
             Server.Instance.MessageSimulator(cameraStreamCloseRequest);
+        }
+
+        /// <summary>
+        /// Sends a status report for the given motor to Mission Control.
+        /// </summary>
+        public static void SendMotorStatusReport(Motor motor)
+        {
+            JObject motorStatusReport = new JObject()
+            {
+                ["type"] = "motorStatusReport",
+                ["motor"] = motor.Name,
+                ["power"] = motor.CurrentPower
+            };
+            if (motor.HasEncoder)
+            {
+                motorStatusReport["position"] = motor.CurrentPosition;
+                motorStatusReport["velocity"] = motor.CurrentVelocity;
+            }
+            else
+            {
+                motorStatusReport["position"] = null;
+                motorStatusReport["velocity"] = null;
+            }
+            Server.Instance.MessageMissionControl(motorStatusReport);
         }
 
         /// <summary>
