@@ -34,7 +34,7 @@ namespace ResurgenceServerDemo.Hardware
                 _motors[motorName] = new Motor(motorName, true);
             }
 
-            string[] cameraNames = { "front" };
+            string[] cameraNames = { "front", "rear", "upperArm" };
             _cameras = new Dictionary<string, Camera>();
             foreach (string cameraName in cameraNames)
             {
