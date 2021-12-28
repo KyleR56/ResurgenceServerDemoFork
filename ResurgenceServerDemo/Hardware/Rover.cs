@@ -8,17 +8,15 @@ namespace ResurgenceServerDemo.Hardware
     /// </summary>
     public class Rover
     {
-        private bool _emergencyStopped;
         private readonly IDictionary<string, Motor> _motors;
         private readonly IDictionary<string, Camera> _cameras;
+        private bool _emergencyStopped;
 
         /// <summary>
         /// Constructs a new virtual representation of the rover.
         /// </summary>
         public Rover()
         {
-            _emergencyStopped = false;
-
             string[] motorNames = {
                 "frontLeftWheel",
                 "frontRightWheel",
@@ -40,6 +38,10 @@ namespace ResurgenceServerDemo.Hardware
             {
                 _cameras[cameraName] = new Camera(cameraName);
             }
+
+            LidarSensor = new LidarSensor();
+
+            _emergencyStopped = false;
         }
 
         /// <summary>
@@ -101,5 +103,7 @@ namespace ResurgenceServerDemo.Hardware
             }
             throw new ArgumentException("No such camera: " + cameraName);
         }
+
+        public LidarSensor LidarSensor { get; }
     }
 }

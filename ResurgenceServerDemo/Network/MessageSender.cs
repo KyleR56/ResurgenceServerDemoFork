@@ -49,6 +49,22 @@ namespace ResurgenceServerDemo.Network
         }
 
         /// <summary>
+        /// Sends a lidar report to Mission Control.
+        /// </summary>
+        public static void SendLidarReport(LidarSensor lidarSensor)
+        {
+            JArray jsonPoints = new JArray();
+            foreach (double[] point in lidarSensor.Points)
+                jsonPoints.Add(new JArray(point[0], point[1], point[2]));
+            JObject lidarReport = new JObject()
+            {
+                ["type"] = "lidarReport",
+                ["points"] = jsonPoints
+            };
+            Server.Instance.MessageMissionControl(lidarReport);
+        }
+
+        /// <summary>
         /// Instructs the simulator to set a simulated motor's power.
         /// </summary>
         public static void SendSimMotorPowerRequest(Motor motor)

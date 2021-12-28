@@ -139,5 +139,23 @@ namespace ResurgenceServerDemo.Network
             byte[] data = Convert.FromBase64String((string)cameraStreamReport["data"]);
             rover.GetCamera(cameraName).StreamData = data;
         }
+
+        /// <summary>
+        /// Handles a lidar report sent from the simulator to rover.
+        /// </summary>
+        public static void HandleSimLidarReport(Rover rover, JObject lidarReport)
+        {
+            JArray jsonPoints = (JArray)lidarReport["points"];
+            double[][] points = new double[jsonPoints.Count][];
+            for (int i = 0; i < jsonPoints.Count; i++)
+            {
+                JArray jsonPoint = (JArray)jsonPoints[i];
+                double[] point = new double[3];
+                for (int j = 0; j < 3; j++)
+                    point[j] = (double)jsonPoint[j];
+                points[i] = point;
+            }
+            rover.LidarSensor.Points = points;
+        }
     }
 }

@@ -66,6 +66,9 @@ namespace ResurgenceServerDemo.Network
                 case "simCameraStreamReport":
                     MessageHandler.HandleSimCameraStreamReport(_rover, message);
                     break;
+                case "simLidarReport":
+                    MessageHandler.HandleSimLidarReport(_rover, message);
+                    break;
                 default:
                     Console.Error.WriteLine("Unknown message type: " + type);
                     break;
