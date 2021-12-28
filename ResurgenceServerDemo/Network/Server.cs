@@ -75,7 +75,7 @@ namespace ResurgenceServerDemo.Network
         /// </summary>
         public void MessageMissionControl(JObject message)
         {
-            _server.WebSocketServices[MissionControlPath].Sessions.Broadcast(message.ToString());
+            _server.WebSocketServices[MissionControlPath].Sessions.Broadcast(message.ToString(Newtonsoft.Json.Formatting.None));
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace ResurgenceServerDemo.Network
         /// </summary>
         public void MessageSimulator(JObject message)
         {
-            _server.WebSocketServices[SimulatorPath].Sessions.Broadcast(message.ToString());
+            _server.WebSocketServices[SimulatorPath].Sessions.Broadcast(message.ToString(Newtonsoft.Json.Formatting.None));
         }
     }
 }
