@@ -29,13 +29,13 @@ namespace ResurgenceServerDemo.Network
             {
                 if (camera.IsStreaming)
                 {
-                    MessageUtility.SendSimCameraStreamOpenRequest(camera);
+                    MessageSender.SendSimCameraStreamOpenRequest(camera);
                 }
             }
 
             foreach (Motor motor in _rover.Motors)
             {
-                MessageUtility.SendSimMotorPowerRequest(motor);
+                MessageSender.SendSimMotorPowerRequest(motor);
             }
         }
 
@@ -61,10 +61,10 @@ namespace ResurgenceServerDemo.Network
             switch (type)
             {
                 case "simMotorStatusReport":
-                    MessageUtility.HandleSimMotorStatusReport(_rover, message);
+                    MessageHandler.HandleSimMotorStatusReport(_rover, message);
                     break;
                 case "simCameraStreamReport":
-                    MessageUtility.HandleSimCameraStreamReport(_rover, message);
+                    MessageHandler.HandleSimCameraStreamReport(_rover, message);
                     break;
                 default:
                     Console.Error.WriteLine("Unknown message type: " + type);

@@ -42,10 +42,8 @@ namespace ResurgenceServerDemo.Hardware
             {
                 _streamFps = value;
                 if (_isStreaming)
-                {
                     // Inform the simulator about the new fps.
-                    MessageUtility.SendSimCameraStreamOpenRequest(this);
-                }
+                    MessageSender.SendSimCameraStreamOpenRequest(this);
             }
         }
 
@@ -59,10 +57,8 @@ namespace ResurgenceServerDemo.Hardware
             {
                 _streamWidth = value;
                 if (_isStreaming)
-                {
                     // Inform the simulator about the new width.
-                    MessageUtility.SendSimCameraStreamOpenRequest(this);
-                }
+                    MessageSender.SendSimCameraStreamOpenRequest(this);
             }
         }
 
@@ -76,10 +72,8 @@ namespace ResurgenceServerDemo.Hardware
             {
                 _streamHeight = value;
                 if (_isStreaming)
-                {
                     // Inform the simulator about the new height.
-                    MessageUtility.SendSimCameraStreamOpenRequest(this);
-                }
+                    MessageSender.SendSimCameraStreamOpenRequest(this);
             }
         }
 
@@ -95,13 +89,9 @@ namespace ResurgenceServerDemo.Hardware
                 // Inform the simulator whether we would like to receive a
                 // simulated camera stream.
                 if (_isStreaming)
-                {
-                    MessageUtility.SendSimCameraStreamOpenRequest(this);
-                }
+                    MessageSender.SendSimCameraStreamOpenRequest(this);
                 else
-                {
-                    MessageUtility.SendSimCameraStreamCloseRequest(this);
-                }
+                    MessageSender.SendSimCameraStreamCloseRequest(this);
             }
         }
 
@@ -115,7 +105,7 @@ namespace ResurgenceServerDemo.Hardware
             set
             {
                 _streamData = value;
-                MessageUtility.SendCameraStreamReport(this);
+                MessageSender.SendCameraStreamReport(this);
             }
         }
     }

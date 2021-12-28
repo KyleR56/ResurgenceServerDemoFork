@@ -71,13 +71,13 @@ namespace ResurgenceServerDemo.Hardware
                 switch (_mode)
                 {
                     case RunMode.RunWithPower:
-                        MessageUtility.SendSimMotorPowerRequest(this);
+                        MessageSender.SendSimMotorPowerRequest(this);
                         break;
                     case RunMode.RunToPosition:
-                        MessageUtility.SendSimMotorPositionRequest(this);
+                        MessageSender.SendSimMotorPositionRequest(this);
                         break;
                     case RunMode.RunWithVelocity:
-                        MessageUtility.SendSimMotorVelocityRequest(this);
+                        MessageSender.SendSimMotorVelocityRequest(this);
                         break;
                 }
             }
@@ -97,12 +97,10 @@ namespace ResurgenceServerDemo.Hardware
             set
             {
                 if (Math.Abs(value) > 1)
-                {
                     throw new ArgumentOutOfRangeException("|value| > 1");
-                }
                 _targetPower = value;
                 if (Mode == RunMode.RunWithPower)
-                    MessageUtility.SendSimMotorPowerRequest(this);
+                    MessageSender.SendSimMotorPowerRequest(this);
             }
         }
 
@@ -115,7 +113,7 @@ namespace ResurgenceServerDemo.Hardware
             set
             {
                 _currentPower = value;
-                MessageUtility.SendMotorStatusReport(this);
+                MessageSender.SendMotorStatusReport(this);
             }
         }
 
@@ -134,7 +132,7 @@ namespace ResurgenceServerDemo.Hardware
                 EnsureEncoder();
                 _targetPosition = value;
                 if (Mode == RunMode.RunToPosition)
-                    MessageUtility.SendSimMotorPositionRequest(this);
+                    MessageSender.SendSimMotorPositionRequest(this);
             }
         }
 
@@ -152,7 +150,7 @@ namespace ResurgenceServerDemo.Hardware
             {
                 EnsureEncoder();
                 _currentPosition = value;
-                MessageUtility.SendMotorStatusReport(this);
+                MessageSender.SendMotorStatusReport(this);
             }
         }
 
@@ -172,7 +170,7 @@ namespace ResurgenceServerDemo.Hardware
                 EnsureEncoder();
                 _targetVelocity = value;
                 if (Mode == RunMode.RunWithVelocity)
-                    MessageUtility.SendSimMotorVelocityRequest(this);
+                    MessageSender.SendSimMotorVelocityRequest(this);
             }
         }
 
@@ -191,7 +189,7 @@ namespace ResurgenceServerDemo.Hardware
             {
                 EnsureEncoder();
                 _currentVelocity = value;
-                MessageUtility.SendMotorStatusReport(this);
+                MessageSender.SendMotorStatusReport(this);
             }
         }
 
@@ -201,9 +199,7 @@ namespace ResurgenceServerDemo.Hardware
         private void EnsureEncoder()
         {
             if (!HasEncoder)
-            {
                 throw new InvalidOperationException(Name + " has no encoder");
-            }
         }
     }
 }

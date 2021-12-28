@@ -47,25 +47,25 @@ namespace ResurgenceServerDemo.Network
             switch (type)
             {
                 case "emergencyStopRequest":
-                    MessageUtility.HandleEmergencyStopRequest(_rover, message);
+                    MessageHandler.HandleEmergencyStopRequest(_rover, message);
                     break;
                 case "driveRequest":
-                    MessageUtility.HandleDriveRequest(_rover, message);
+                    MessageHandler.HandleDriveRequest(_rover, message);
                     break;
                 case "motorPowerRequest":
-                    MessageUtility.HandleMotorPowerRequest(_rover, message);
+                    MessageHandler.HandleMotorPowerRequest(_rover, message);
                     break;
                 case "motorPositionRequest":
-                    MessageUtility.HandleMotorPositionRequest(_rover, message);
+                    MessageHandler.HandleMotorPositionRequest(_rover, message);
                     break;
                 case "motorVelocityRequest":
-                    MessageUtility.HandleMotorVelocityRequest(_rover, message);
+                    MessageHandler.HandleMotorVelocityRequest(_rover, message);
                     break;
                 case "cameraStreamOpenRequest":
-                    MessageUtility.HandleCameraStreamOpenRequest(_rover, message);
+                    MessageHandler.HandleCameraStreamOpenRequest(_rover, message);
                     break;
                 case "cameraStreamCloseRequest":
-                    MessageUtility.HandleCameraStreamCloseRequest(_rover, message);
+                    MessageHandler.HandleCameraStreamCloseRequest(_rover, message);
                     break;
                 default:
                     Console.Error.WriteLine("Unknown message type: " + type);
