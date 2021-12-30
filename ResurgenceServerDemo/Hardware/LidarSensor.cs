@@ -1,24 +1,25 @@
-﻿using ResurgenceServerDemo.Network;
-
-namespace ResurgenceServerDemo.Hardware
+﻿namespace ResurgenceServerDemo.Hardware
 {
     public class LidarSensor
     {
-        public double[][] _points;
+        public struct LidarPoint
+        {
+            public LidarPoint(double r, double theta)
+            {
+                R = r;
+                Theta = theta;
+            }
+
+            public double R { get; set; }
+
+            public double Theta { get; set; }
+        }
 
         public LidarSensor()
         {
-            _points = null;
+            Points = null;
         }
 
-        public double[][] Points
-        {
-            get { return _points; }
-            set
-            {
-                _points = value;
-                MessageSender.SendLidarReport(this);
-            }
-        }
+        public LidarPoint[] Points { get; set; }
     }
 }
