@@ -53,13 +53,21 @@ namespace ResurgenceServerDemo.Network
         /// </summary>
         public static void SendLidarReport(LidarSensor lidarSensor)
         {
-            JArray jsonPoints = new JArray();
-            foreach (double[] point in lidarSensor.Points)
-                jsonPoints.Add(new JArray(point[0], point[1], point[2]));
+            JObject[] jPoints = new JObject[lidarSensor.Points.Length];
+            for (int i = 0; i < lidarSensor.Points.Length; i++)
+            {
+                LidarSensor.LidarPoint point = lidarSensor.Points[i];
+                JObject jPoint = new JObject()
+                {
+                    ["x"] = point.R * Math.Cos(Math.PI / 180 * point.Theta),
+                    ["y"] = point.R * Math.Sin(Math.PI / 180 * point.Theta)
+                };
+                jPoints[i] = jPoint;
+            }
             JObject lidarReport = new JObject()
             {
                 ["type"] = "lidarReport",
-                ["points"] = jsonPoints
+                ["points"] = new JArray(jPoints)
             };
             Server.Instance.MessageMissionControl(lidarReport);
         }
