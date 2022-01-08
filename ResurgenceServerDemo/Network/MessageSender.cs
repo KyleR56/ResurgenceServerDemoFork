@@ -59,8 +59,8 @@ namespace ResurgenceServerDemo.Network
                 LidarSensor.LidarPoint point = lidarSensor.Points[i];
                 JObject jPoint = new JObject()
                 {
-                    ["x"] = point.R * Math.Cos(Math.PI / 180 * point.Theta),
-                    ["y"] = point.R * Math.Sin(Math.PI / 180 * point.Theta)
+                    ["x"] = point.R * Math.Cos(point.Theta),
+                    ["y"] = point.R * Math.Sin(point.Theta)
                 };
                 jPoints[i] = jPoint;
             }
