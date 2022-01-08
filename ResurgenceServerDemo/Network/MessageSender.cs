@@ -101,20 +101,6 @@ namespace ResurgenceServerDemo.Network
         }
 
         /// <summary>
-        /// Instructs the simulator to set a simulated motor's target velocity.
-        /// </summary>
-        public static void SendSimMotorVelocityRequest(Motor motor)
-        {
-            JObject motorVelocityRequest = new JObject()
-            {
-                ["type"] = "simMotorVelocityRequest",
-                ["motor"] = motor.Name,
-                ["velocity"] = motor.TargetVelocity
-            };
-            Server.Instance.MessageSimulator(motorVelocityRequest);
-        }
-
-        /// <summary>
         /// Instructs the simulator to begin providing a camera stream, or to
         /// update the parameters of an existing camera stream.
         /// </summary>

@@ -58,9 +58,6 @@ namespace ResurgenceServerDemo.Network
                 case "motorPositionRequest":
                     MessageHandler.HandleMotorPositionRequest(_rover, message);
                     break;
-                case "motorVelocityRequest":
-                    MessageHandler.HandleMotorVelocityRequest(_rover, message);
-                    break;
                 case "cameraStreamOpenRequest":
                     MessageHandler.HandleCameraStreamOpenRequest(_rover, message);
                     break;

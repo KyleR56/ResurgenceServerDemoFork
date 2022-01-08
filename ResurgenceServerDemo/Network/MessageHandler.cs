@@ -34,7 +34,7 @@ namespace ResurgenceServerDemo.Network
         }
 
         /// <summary>
-        /// Handles a motor power request sent from Mission Control to the 
+        /// Handles a motor power request sent from Mission Control to the
         /// rover.
         /// </summary>
         public static void HandleMotorPowerRequest(Rover rover, JObject motorPowerRequest)
@@ -51,7 +51,7 @@ namespace ResurgenceServerDemo.Network
         }
 
         /// <summary>
-        /// Handles a motor velocity request sent from Mission Control to the 
+        /// Handles a motor position request sent from Mission Control to the
         /// rover.
         /// </summary>
         public static void HandleMotorPositionRequest(Rover rover, JObject motorPositionRequest)
@@ -65,23 +65,6 @@ namespace ResurgenceServerDemo.Network
             Motor motor = rover.GetMotor(motorName);
             motor.TargetPosition = position;
             motor.Mode = Motor.RunMode.RunToPosition;
-        }
-
-        /// <summary>
-        /// Handles a motor position request sent from Mission Control to the
-        /// rover.
-        /// </summary>
-        public static void HandleMotorVelocityRequest(Rover rover, JObject motorVelocityRequest)
-        {
-            if (rover.EmergencyStopped)
-            {
-                return;
-            }
-            string motorName = (string)motorVelocityRequest["motor"];
-            double position = (double)motorVelocityRequest["position"];
-            Motor motor = rover.GetMotor(motorName);
-            motor.TargetVelocity = position;
-            motor.Mode = Motor.RunMode.RunWithVelocity;
         }
 
         /// <summary>

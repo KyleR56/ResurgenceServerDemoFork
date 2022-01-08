@@ -20,11 +20,7 @@ namespace ResurgenceServerDemo.Hardware
             /// <summary>
             /// The motor will try to reach its target position.
             /// </summary>
-            RunToPosition,
-            /// <summary>
-            /// The motor will try to run with its target velocity.
-            /// </summary>
-            RunWithVelocity
+            RunToPosition
         }
 
         private RunMode _mode;
@@ -32,7 +28,6 @@ namespace ResurgenceServerDemo.Hardware
         private double _currentPower;
         private double _targetPosition;
         private double _currentPosition;
-        private double _targetVelocity;
         private double _currentVelocity;
 
         /// <summary>
@@ -47,7 +42,6 @@ namespace ResurgenceServerDemo.Hardware
             _currentPower = 0;
             _targetPosition = 0;
             _currentPosition = 0;
-            _targetVelocity = 0;
             _currentVelocity = 0;
         }
 
@@ -65,7 +59,7 @@ namespace ResurgenceServerDemo.Hardware
             set
             {
                 if (value == _mode) return;
-                if (value == RunMode.RunToPosition || value == RunMode.RunWithVelocity)
+                if (value == RunMode.RunToPosition)
                     EnsureEncoder();
                 _mode = value;
                 switch (_mode)
@@ -75,9 +69,6 @@ namespace ResurgenceServerDemo.Hardware
                         break;
                     case RunMode.RunToPosition:
                         MessageSender.SendSimMotorPositionRequest(this);
-                        break;
-                    case RunMode.RunWithVelocity:
-                        MessageSender.SendSimMotorVelocityRequest(this);
                         break;
                 }
             }
@@ -151,26 +142,6 @@ namespace ResurgenceServerDemo.Hardware
                 EnsureEncoder();
                 _currentPosition = value;
                 MessageSender.SendMotorStatusReport(this);
-            }
-        }
-
-        /// <summary>
-        /// The velocity in degrees per second that this motor will try to run 
-        /// with.
-        /// </summary>
-        public double TargetVelocity
-        {
-            get
-            {
-                EnsureEncoder();
-                return _targetVelocity;
-            }
-            set
-            {
-                EnsureEncoder();
-                _targetVelocity = value;
-                if (Mode == RunMode.RunWithVelocity)
-                    MessageSender.SendSimMotorVelocityRequest(this);
             }
         }
 
