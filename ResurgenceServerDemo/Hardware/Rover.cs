@@ -29,7 +29,8 @@ namespace ResurgenceServerDemo.Hardware
                 "rearRightWheel",
                 "armBase",
                 "shoulder",
-                "elbow"
+                "elbow",
+                "hand"
             };
             _motors = new Dictionary<string, Motor>();
             foreach (string motorName in motorNames)
