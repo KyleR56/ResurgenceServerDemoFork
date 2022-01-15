@@ -8,6 +8,11 @@ namespace ResurgenceServerDemo.Hardware
     /// </summary>
     public class Rover
     {
+        public enum OperationMode
+        {
+            Teleoperation, Autonomous
+        }
+
         private readonly IDictionary<string, Motor> _motors;
         private readonly IDictionary<string, Camera> _cameras;
         private bool _emergencyStopped;
@@ -43,6 +48,8 @@ namespace ResurgenceServerDemo.Hardware
 
             _emergencyStopped = false;
         }
+
+        public OperationMode Mode { get; set; }
 
         /// <summary>
         /// Whether the emergency stop is engaged.
