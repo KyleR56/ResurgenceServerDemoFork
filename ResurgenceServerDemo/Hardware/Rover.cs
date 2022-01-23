@@ -30,6 +30,9 @@ namespace ResurgenceServerDemo.Hardware
                 "armBase",
                 "shoulder",
                 "elbow",
+                "forearm",
+                "differentialLeft",
+                "differentialRight",
                 "hand"
             };
             _motors = new Dictionary<string, Motor>();

@@ -69,6 +69,10 @@ namespace ResurgenceServerDemo.Network
                 case "simLidarReport":
                     MessageHandler.HandleSimLidarReport(_rover, message);
                     break;
+                case "simGpsPositionReport":
+                    break;
+                case "simImuOrientationReport":
+                    break;
                 default:
                     Console.Error.WriteLine("Unknown message type: " + type);
                     break;
