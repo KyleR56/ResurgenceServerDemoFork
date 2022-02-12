@@ -11,7 +11,26 @@ namespace ResurgenceServerDemo.Network
     public static class MessageHandler
     {
         /// <summary>
-        /// Handles an emergency stop request sent from Mission Control to the rover.
+        /// Handles an operation mode request sent from Mission Control to the
+        /// rover.
+        /// </summary
+        public static void HandleOperationModeRequest(Rover _rover, JObject operationModeRequest)
+        {
+            string mode = (string)operationModeRequest["mode"];
+            switch (mode)
+            {
+                case "teleoperation":
+                    _rover.Mode = Rover.OperationMode.Teleoperation;
+                    break;
+                case "autonomous":
+                    _rover.Mode = Rover.OperationMode.Autonomous;
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Handles an emergency stop request sent from Mission Control to the
+        /// rover.
         /// </summary>
         public static void HandleEmergencyStopRequest(Rover rover, JObject emergencyStopRequest)
         {
@@ -75,9 +94,9 @@ namespace ResurgenceServerDemo.Network
         {
             string cameraName = (string)cameraStreamOpenRequest["camera"];
             Camera camera = rover.GetCamera(cameraName);
-            camera.StreamFps = (double)cameraStreamOpenRequest["fps"];
-            camera.StreamWidth = (int)cameraStreamOpenRequest["width"];
-            camera.StreamHeight = (int)cameraStreamOpenRequest["height"];
+            camera.StreamFps = 30;
+            camera.StreamWidth = 500;
+            camera.StreamHeight = 250;
             camera.IsStreaming = true;
         }
 

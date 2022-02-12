@@ -73,6 +73,8 @@ namespace ResurgenceServerDemo.Network
                     break;
                 case "simImuOrientationReport":
                     break;
+                case "simRoverTruePoseReport":
+                    break;
                 default:
                     Console.Error.WriteLine("Unknown message type: " + type);
                     break;

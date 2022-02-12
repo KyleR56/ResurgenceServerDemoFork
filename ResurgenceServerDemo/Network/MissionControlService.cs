@@ -47,16 +47,7 @@ namespace ResurgenceServerDemo.Network
             switch (type)
             {
                 case "operationModeRequest":
-                    string mode = (string)message["mode"];
-                    switch (mode)
-                    {
-                        case "teleoperation":
-                            _rover.Mode = Rover.OperationMode.Teleoperation;
-                            break;
-                        case "autonomous":
-                            _rover.Mode = Rover.OperationMode.Autonomous;
-                            break;
-                    }
+                    MessageHandler.HandleOperationModeRequest(_rover, message);
                     break;
                 case "emergencyStopRequest":
                     MessageHandler.HandleEmergencyStopRequest(_rover, message);
