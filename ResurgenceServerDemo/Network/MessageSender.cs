@@ -11,6 +11,19 @@ namespace ResurgenceServerDemo.Network
     public static class MessageSender
     {
         /// <summary>
+        /// Sends a mounted peripheral report to Mission Control.
+        /// </summary>
+        public static void SendMountedPeripheralReport(string peripheral)
+        {
+            JObject mountedPeripheralReport = new JObject()
+            {
+                ["type"] = "mountedPeripheralReport",
+                ["peripheral"] = peripheral
+            };
+            Server.Instance.MessageMissionControl(mountedPeripheralReport);
+        }
+
+        /// <summary>
         /// Sends a status report for the given motor to Mission Control.
         /// </summary>
         public static void SendMotorStatusReport(Motor motor)

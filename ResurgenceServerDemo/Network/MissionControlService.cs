@@ -22,6 +22,7 @@ namespace ResurgenceServerDemo.Network
         protected override void OnOpen()
         {
             Console.WriteLine("Mission Control connected.");
+            MessageSender.SendMountedPeripheralReport("arm");
         }
 
         protected override void OnMessage(MessageEventArgs e)
@@ -55,11 +56,11 @@ namespace ResurgenceServerDemo.Network
                 case "driveRequest":
                     MessageHandler.HandleDriveRequest(_rover, message);
                     break;
-                case "motorPowerRequest":
-                    MessageHandler.HandleMotorPowerRequest(_rover, message);
+                case "jointPowerRequest":
+                    MessageHandler.HandleJointPowerRequest(_rover, message);
                     break;
-                case "motorPositionRequest":
-                    MessageHandler.HandleMotorPositionRequest(_rover, message);
+                case "jointPositionRequest":
+                    MessageHandler.HandleJointPositionRequest(_rover, message);
                     break;
                 case "cameraStreamOpenRequest":
                     MessageHandler.HandleCameraStreamOpenRequest(_rover, message);

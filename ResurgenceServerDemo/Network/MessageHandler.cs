@@ -53,37 +53,33 @@ namespace ResurgenceServerDemo.Network
         }
 
         /// <summary>
-        /// Handles a motor power request sent from Mission Control to the
+        /// Handles a joint power request sent from Mission Control to the
         /// rover.
         /// </summary>
-        public static void HandleMotorPowerRequest(Rover rover, JObject motorPowerRequest)
+        public static void HandleJointPowerRequest(Rover rover, JObject jointPowerRequest)
         {
             if (rover.EmergencyStopped)
             {
                 return;
             }
-            string motorName = (string)motorPowerRequest["motor"];
-            double power = (double)motorPowerRequest["power"];
-            Motor motor = rover.GetMotor(motorName);
-            motor.TargetPower = power;
-            motor.Mode = Motor.RunMode.RunWithPower;
+            string joint = (string)jointPowerRequest["joint"];
+            double power = (double)jointPowerRequest["power"];
+            RoverUtility.RunJointWithPower(rover, joint, power);
         }
 
         /// <summary>
-        /// Handles a motor position request sent from Mission Control to the
+        /// Handles a joint position request sent from Mission Control to the
         /// rover.
         /// </summary>
-        public static void HandleMotorPositionRequest(Rover rover, JObject motorPositionRequest)
+        public static void HandleJointPositionRequest(Rover rover, JObject jointPositionRequest)
         {
             if (rover.EmergencyStopped)
             {
                 return;
             }
-            string motorName = (string)motorPositionRequest["motor"];
-            double position = (double)motorPositionRequest["position"];
-            Motor motor = rover.GetMotor(motorName);
-            motor.TargetPosition = position;
-            motor.Mode = Motor.RunMode.RunToPosition;
+            string joint = (string)jointPositionRequest["joint"];
+            double position = (double)jointPositionRequest["position"];
+            RoverUtility.RunJointToPosition(rover, joint, position);
         }
 
         /// <summary>

@@ -41,5 +41,47 @@ namespace ResurgenceServerDemo.Hardware
             rearRightWheel.TargetPower = rightPower;
             rearRightWheel.Mode = Motor.RunMode.RunWithPower;
         }
+
+        /// <summary>
+        /// Runs the specified joint on the rover with the given power.
+        /// </summary>
+        public static void RunJointWithPower(Rover rover, string joint, double power)
+        {
+            if (joint == "differentialRoll")
+            {
+                // TODO
+            }
+            else if (joint == "differentialPitch")
+            {
+                // TODO
+            }
+            else
+            {
+                Motor motor = rover.GetMotor(joint);
+                motor.TargetPower = power;
+                motor.Mode = Motor.RunMode.RunWithPower;
+            }
+        }
+
+        /// <summary>
+        /// Runs the specified joint on the rover to the given position.
+        /// </summary>
+        public static void RunJointToPosition(Rover rover, string joint, double position)
+        {
+            if (joint == "differentialRoll")
+            {
+                // TODO
+            }
+            else if (joint == "differentialPitch")
+            {
+                // TODO
+            }
+            else
+            {
+                Motor motor = rover.GetMotor(joint);
+                motor.TargetPosition = position;
+                motor.Mode = Motor.RunMode.RunToPosition;
+            }
+        }
     }
 }
