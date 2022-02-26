@@ -49,11 +49,21 @@ namespace ResurgenceServerDemo.Hardware
         {
             if (joint == "differentialRoll")
             {
-                // TODO
+                Motor differentialLeft = rover.GetMotor("differentialLeft");
+                Motor differentialRight = rover.GetMotor("differentialRight");
+                differentialLeft.TargetPower = power;
+                differentialRight.TargetPower = -power;
+                differentialLeft.Mode = Motor.RunMode.RunWithPower;
+                differentialRight.Mode = Motor.RunMode.RunWithPower;
             }
             else if (joint == "differentialPitch")
             {
-                // TODO
+                Motor differentialLeft = rover.GetMotor("differentialLeft");
+                Motor differentialRight = rover.GetMotor("differentialRight");
+                differentialLeft.TargetPower = power;
+                differentialRight.TargetPower = power;
+                differentialLeft.Mode = Motor.RunMode.RunWithPower;
+                differentialRight.Mode = Motor.RunMode.RunWithPower;
             }
             else
             {
