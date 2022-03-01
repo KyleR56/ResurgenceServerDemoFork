@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using ResurgenceServerDemo.Hardware;
 
@@ -45,6 +46,18 @@ namespace ResurgenceServerDemo.Network
                 motorStatusReport["velocity"] = null;
             }
             Server.Instance.MessageMissionControl(motorStatusReport);
+
+            List<string> jointNames = new List<string> { "armBase", "shoulder", "elbow", "forearm", "hand" };
+            if (jointNames.Contains(motor.Name))
+            {
+                JObject jointPositionReport = new JObject()
+                {
+                    ["type"] = "jointPositionReport",
+                    ["joint"] = motor.Name,
+                    ["position"] = motor.CurrentPosition / 54.0 / 1000.0
+                };
+                Server.Instance.MessageMissionControl(jointPositionReport);
+            }
         }
 
         /// <summary>
