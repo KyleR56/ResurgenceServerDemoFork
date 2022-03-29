@@ -43,6 +43,29 @@ namespace ResurgenceServerDemo.Hardware
         }
 
         /// <summary>
+        /// Sets the power of the rover's drive motors so that the rover drives
+        /// with the given left and right values.
+        /// </summary>
+        public static void TankDrive(Rover rover, double left, double right)
+        {
+            Motor frontLeftWheel = rover.GetMotor("frontLeftWheel");
+            frontLeftWheel.TargetPower = left;
+            frontLeftWheel.Mode = Motor.RunMode.RunWithPower;
+
+            Motor frontRightWheel = rover.GetMotor("frontRightWheel");
+            frontRightWheel.TargetPower = right;
+            frontRightWheel.Mode = Motor.RunMode.RunWithPower;
+
+            Motor rearLeftWheel = rover.GetMotor("rearLeftWheel");
+            rearLeftWheel.TargetPower = left;
+            rearLeftWheel.Mode = Motor.RunMode.RunWithPower;
+
+            Motor rearRightWheel = rover.GetMotor("rearRightWheel");
+            rearRightWheel.TargetPower = right;
+            rearRightWheel.Mode = Motor.RunMode.RunWithPower;
+        }
+
+        /// <summary>
         /// Runs the specified joint on the rover with the given power.
         /// </summary>
         public static void RunJointWithPower(Rover rover, string joint, double power)

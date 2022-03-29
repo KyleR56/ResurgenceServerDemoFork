@@ -56,6 +56,9 @@ namespace ResurgenceServerDemo.Network
                 case "driveRequest":
                     MessageHandler.HandleDriveRequest(_rover, message);
                     break;
+                case "tankDriveRequest":
+                    MessageHandler.HandleTankDriveRequest(_rover, message);
+                    break;
                 case "jointPowerRequest":
                     MessageHandler.HandleJointPowerRequest(_rover, message);
                     break;

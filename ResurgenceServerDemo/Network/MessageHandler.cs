@@ -53,6 +53,20 @@ namespace ResurgenceServerDemo.Network
         }
 
         /// <summary>
+        /// Handles a tank drive request sent from Mission Control to the rover.
+        /// </summary>
+        public static void HandleTankDriveRequest(Rover rover, JObject tankDriveRequest)
+        {
+            if (rover.EmergencyStopped)
+            {
+                return;
+            }
+            double left = (double)tankDriveRequest["left"];
+            double right = (double)tankDriveRequest["right"];
+            RoverUtility.TankDrive(rover, left, right);
+        }
+
+        /// <summary>
         /// Handles a joint power request sent from Mission Control to the
         /// rover.
         /// </summary>
