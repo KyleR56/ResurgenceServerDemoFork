@@ -72,19 +72,6 @@ namespace ResurgenceServerDemo.Network
                 ["data"] = camera.StreamData == null ? null : Convert.ToBase64String(camera.StreamData)
             };
             Server.Instance.MessageMissionControl(cameraStreamReport);
-            JObject RoverPositionReport = new JObject()
-            {
-                ["type"] = "roverPositionReport",
-                ["orientW"] = 1,
-                ["orientX"] = 1,
-                ["orientY"] = 1,
-                ["orientZ"] = 1,
-                ["posX"] = 1,
-                ["posY"] = 1,
-                ["posZ"] = 1,
-                ["recency"] = 1
-            };
-            Server.Instance.MessageMissionControl(RoverPositionReport);
         }
 
         /// <summary>
