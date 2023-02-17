@@ -47,7 +47,7 @@ namespace ResurgenceServerDemo.Network
             }
             Server.Instance.MessageMissionControl(motorStatusReport);
 
-            List<string> jointNames = new List<string> { "armBase", "shoulder", "elbow", "forearm", "hand" };
+            List<string> jointNames = new List<string> { "armBase", "shoulder", "elbow", "forearm", "wrist", "hand", };
             if (jointNames.Contains(motor.Name))
             {
                 JObject jointPositionReport = new JObject()
@@ -72,6 +72,19 @@ namespace ResurgenceServerDemo.Network
                 ["data"] = camera.StreamData == null ? null : Convert.ToBase64String(camera.StreamData)
             };
             Server.Instance.MessageMissionControl(cameraStreamReport);
+            JObject RoverPositionReport = new JObject()
+            {
+                ["type"] = "roverPositionReport",
+                ["orientW"] = 1,
+                ["orientX"] = 1,
+                ["orientY"] = 1,
+                ["orientZ"] = 1,
+                ["posX"] = 1,
+                ["posY"] = 1,
+                ["posZ"] = 1,
+                ["recency"] = 1
+            };
+            Server.Instance.MessageMissionControl(RoverPositionReport);
         }
 
         /// <summary>
@@ -138,7 +151,8 @@ namespace ResurgenceServerDemo.Network
                 ["camera"] = camera.Name,
                 ["fps"] = camera.StreamFps,
                 ["width"] = camera.StreamWidth,
-                ["height"] = camera.StreamHeight
+                ["height"] = camera.StreamHeight,
+                ["intrinsicParameters"] = JArray.FromObject(new float[] { 649.3f, 0f, 335.4f, 0f, 647.7f, 247.8f, 0f, 0f, 1f })
             };
             Server.Instance.MessageSimulator(cameraStreamOpenRequest);
         }
